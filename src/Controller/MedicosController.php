@@ -76,7 +76,20 @@ class MedicosController extends AbstractController
 
         $this->entityManager->flush();
         return new JsonResponse($medico);
+    }
 
+    /**
+     * @Route("/medicos/{id}", methods={"DELETE"})
+     */
+    public function remover(int $id): Response
+    {
+        $medico= $this->buscaMedico($id);
+        if (is_null($medico)) {
+            return new Response('', Response::HTTP_NOT_FOUND);
+        }
+        $this->entityManager->remove($medico);
+        $this->entityManager->flush();
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
