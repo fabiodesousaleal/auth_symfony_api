@@ -4,7 +4,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass=MedicosRepository::class)
  */
 class Medico implements \JsonSerializable
 {
@@ -88,7 +88,7 @@ class Medico implements \JsonSerializable
     public function jsonSerialize()
     {
        return [
-            'id'=> $this->getId(),
+           'id'=> $this->getId(),
            'crm'=> $this->getCrm(),
            'nome'=>$this->getNome(),
            'especialidadeId'=> $this->getEspecialidade()->getId()
