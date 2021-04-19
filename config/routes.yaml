@@ -1,6 +1,4 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+#index
 especialidades:
   path: /especialidades
   controller: App\Controller\EspecialidadesController::buscarTodos
@@ -11,6 +9,11 @@ especialidade:
   controller: App\Controller\EspecialidadesController::buscarUm
   methods:
     - GET
+atualiza_especialidade:
+  path: /especialidades/{id}
+  controller: App\Controller\EspecialidadesController::atualiza
+  methods:
+    - PUT
 remove_especialidade:
   path: /especialidades/{id}
   controller: App\Controller\EspecialidadesController::remove
@@ -36,6 +39,11 @@ criar_medico:
   controller: App\Controller\MedicosController::novo
   methods:
     - POST
+atualiza_medico:
+  path: /medicos/{id}
+  controller: App\Controller\MedicosController::atualiza
+  methods:
+    - PUT
 remove_medico:
   path: /medicos/{id}
   controller: App\Controller\MedicosController::remove
