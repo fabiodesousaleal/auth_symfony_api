@@ -16,6 +16,11 @@ remove_especialidade:
   controller: App\Controller\EspecialidadesController::remove
   methods:
     - DELETE
+criar_especialidade:
+  path: /especialidades
+  controller: App\Controller\EspecialidadesController::novo
+  methods:
+    - POST
 medicos:
   path: /medicos
   controller: App\Controller\MedicosController::buscarTodos
@@ -26,6 +31,11 @@ medico:
   controller: App\Controller\MedicosController::buscarUm
   methods:
     - GET
+criar_medico:
+  path: /medicos
+  controller: App\Controller\MedicosController::novo
+  methods:
+    - POST
 remove_medico:
   path: /medicos/{id}
   controller: App\Controller\MedicosController::remove

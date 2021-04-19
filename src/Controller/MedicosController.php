@@ -13,45 +13,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MedicosController extends BaseController
 {
-
-    /**
-     * @var MedicoFactory
-     */
-    private $medicoFactory;
-    /**
-     * @var MedicosRepository
-     */
-
-
     public function __construct(
         EntityManagerInterface $entityManager,
         MedicoFactory $medicoFactory,
         MedicosRepository $medicosRepository
     )
     {
-        parent::__construct($medicosRepository, $entityManager);
-        $this->medicoFactory = $medicoFactory;
-        $this->repository = $medicosRepository;
-    }
-    /**
-     * @Route("/medicos", methods={"POST"})
-     */
-    public function novo(Request $request): Response
-    {
-        $corpoRequisicao = $request->getContent();
-        $medico = $this->medicoFactory->criarMedico($corpoRequisicao);
-        $this->entityManager->persist($medico);
-        $this->entityManager->flush();
-        return new JsonResponse($medico);
-    }
+        parent::__construct($medicosRepository, $entityManager, $medicoFactory);
 
+    }
     /**
      * @Route("/medicos/{id}", methods={"PUT"})
      */
     public function atualizar(int $id, Request $request): Response
     {
         $corpoRequisicao = $request->getContent();
-        $medicoEnviado = $this->medicoFactory->criarMedico($corpoRequisicao);
+        $medicoEnviado = $this->factory->criarEntidade($corpoRequisicao);
         $medico = $this->buscaMedico($id);
         if (is_null($medico)) {
             return new Response('', Response::HTTP_NOT_FOUND);

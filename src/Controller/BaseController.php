@@ -3,10 +3,12 @@
 
 namespace App\Controller;
 
+use App\Helper\EntidadeFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController extends AbstractController
@@ -19,14 +21,28 @@ abstract class BaseController extends AbstractController
      * @var EntityManagerInterface
      */
     protected $entityManager;
+    /**
+     * @var EntidadeFactory
+     */
+    protected $factory;
 
     public function __construct(
         ObjectRepository $repository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        EntidadeFactory $factory
     )
     {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
+        $this->factory = $factory;
+    }
+    public function novo(Request $request): Response
+    {
+        $corpoRequisicao = $request->getContent();
+        $entidade = $this->factory->criarEntidade($corpoRequisicao);
+        $this->entityManager->persist($entidade);
+        $this->entityManager->flush();
+        return new JsonResponse($entidade);
     }
 
     public function buscarTodos(): Response
