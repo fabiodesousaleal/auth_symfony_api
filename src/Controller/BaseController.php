@@ -56,7 +56,14 @@ abstract class BaseController extends AbstractController
     {
         $filtro = $this->extratorDadosRequest->buscaDadosFiltro($request);
         $informacoesDeOrdenacao = $this->extratorDadosRequest->buscaDadosOrdenacao($request);
-        $lista = $this->repository->findBy($filtro, $informacoesDeOrdenacao);
+        [$paginaAtual, $itensPorPagina] = $this->extratorDadosRequest->buscaDadosPaginacao($request);
+        $lista = $this->repository->findBy(
+            $filtro,
+            $informacoesDeOrdenacao,
+            $itensPorPagina,
+            ($paginaAtual -1 ) * $itensPorPagina
+
+        );
         return new JsonResponse($lista);
     }
     public function buscarUm(int $id): Response
