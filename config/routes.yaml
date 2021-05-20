@@ -49,3 +49,9 @@ remove_medico:
   controller: App\Controller\MedicosController::remove
   methods:
     - DELETE
+# Auth
+login:
+  path: /login
+  methods:
+    - POST
+  controller: App\Controller\AuthController::getToken
